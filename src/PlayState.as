@@ -9,6 +9,8 @@ package
     import Box2D.Dynamics.Joints.*;
 
     import flash.display.*;
+	import flash.utils.setTimeout;
+	import flash.utils.clearInterval;
 
     public class PlayState extends TimedState
     {
@@ -49,6 +51,8 @@ package
         public var smoke:FlxSprite;
         public var howText1:FlxText;
         public var howText2:FlxText;
+		
+		public var restartTimer:uint;
 
         override public function create():void
         {
@@ -124,7 +128,10 @@ package
                     FlxG.playMusic(SndBGM, ggj.VOLUME);
                 }
             }
-        }
+
+			// Set restart timer
+			restartTimer = setTimeout(restartGame, 30000);
+		}
 
         override public function update():void
         {
@@ -143,6 +150,8 @@ package
                 FlxG.state.remove(smoke);
                 FlxG.state.remove(howText1);
                 FlxG.state.remove(howText2);
+				// Clear instruction reset
+				clearInterval(restartTimer); 
             }
 
             UpdateMouseWorld()
@@ -293,5 +302,10 @@ package
             //wallB = m_world.CreateBody(wallBd);
             //wallB.CreateFixture2(wall);
         }
+		
+		public function restartGame ():void {
+			FlxG.switchState(new MenuState());
+		}
+
     }
 }

@@ -9,3 +9,7 @@ nohup.out
 *.app
 *.pfx
 *.tmp
+src/Ho Do You Do It.as3proj
+src/bin/
+src/obj/
+src/src/

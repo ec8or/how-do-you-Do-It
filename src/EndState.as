@@ -1,9 +1,14 @@
 package{
     import org.flixel.*;
 
+	import flash.utils.setTimeout;
+	import flash.utils.clearInterval;
+
     public class EndState extends FlxState{
         public var times:Number;
         public var caught:Boolean
+
+		public var restartTimer:uint;
 
         public function EndState(sex:Number, caught:Boolean){
             times = sex;
@@ -31,14 +36,23 @@ package{
             t = new FlxText(0,FlxG.height-40,FlxG.width,"Press any key to play again");
             t.setFormat("Minecraftia-Regular",16,0xffffffff,"center");
             add(t);
-        }
+
+			// Set restart timer
+			restartTimer = setTimeout(restartGame, 30000);
+
+		}
 
         override public function update():void{
             super.update();
 
             if(FlxG.keys.any()){
-                FlxG.switchState(new MomLeavingState(new PlayState()));
+                FlxG.switchState(new MenuState());
             }
         }
+
+		public function restartGame ():void {
+			FlxG.switchState(new MenuState());
+		}
+		
     }
 }
